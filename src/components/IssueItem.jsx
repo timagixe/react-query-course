@@ -3,6 +3,7 @@ import { GoIssueClosed, GoIssueOpened, GoComment } from "react-icons/go";
 import { relativeDate } from "../helpers/relativeDate";
 import { issueUtils } from "../helpers/issueUtils";
 import { memo } from "react";
+import useUserQuery from "../hooks/useUserQuery";
 
 function IssueItem({
   title,
@@ -14,6 +15,9 @@ function IssueItem({
   labels,
   status,
 }) {
+  const assigneeQuery = useUserQuery(assignee);
+  const createdByQuery = useUserQuery(createdBy);
+
   return (
     <li>
       <div>
@@ -33,10 +37,18 @@ function IssueItem({
           ))}
         </span>
         <small>
-          #{number} opened {relativeDate(createdDate)} by {createdBy}
+          #{number} opened {relativeDate(createdDate)}
+          <span>&nbsp;</span>
+          {createdByQuery.isSuccess && `by ${createdByQuery.data.name}`}
         </small>
       </div>
-      {assignee ? <div>{assignee}</div> : null}
+      {assigneeQuery.isSuccess && (
+        <img
+          src={assigneeQuery.data.profilePictureUrl}
+          className="assigned-to"
+          alt={`Assigned to ${assigneeQuery.data.name}`}
+        />
+      )}
       <span className="comment-count">
         {commentCount > 0 ? (
           <>
