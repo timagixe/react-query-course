@@ -1,0 +1,18 @@
+import { useQuery } from "react-query";
+import handleResponse from "../helpers/handleResponse";
+
+const userUrl = (userId) => `/api/users/${userId}`;
+
+function queryUserFunction({ queryKey: [{ userId }] }) {
+  return fetch(userUrl(userId)).then(
+    handleResponse({
+      onErrorMessage: `Couldn't load data for userId = ${userId}`,
+    })
+  );
+}
+
+export default function useUserQuery(userId) {
+  return useQuery([{ scope: "users", userId }], queryUserFunction, {
+    enabled: Boolean(userId),
+  });
+}
