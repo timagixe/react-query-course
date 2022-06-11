@@ -1,14 +1,8 @@
-import { useQuery } from "react-query";
+import useIssuesQuery from "../hooks/useIssuesQuery";
 import IssueItem from "./IssueItem";
 
-async function fetchIssues() {
-  const url = "api/issues";
-  const data = await fetch(url);
-  return await data.json();
-}
-
 export default function IssuesList() {
-  const issuesQuery = useQuery(["issues"], fetchIssues);
+  const issuesQuery = useIssuesQuery();
 
   return (
     <div>
