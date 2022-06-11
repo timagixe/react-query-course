@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { GoIssueClosed, GoIssueOpened, GoComment } from "react-icons/go";
 import { relativeDate } from "../helpers/relativeDate";
-import { issueUtil } from "../helpers/issue";
+import { issueUtils } from "../helpers/issueUtils";
 import { memo } from "react";
 
 function IssueItem({
@@ -17,7 +17,7 @@ function IssueItem({
   return (
     <li>
       <div>
-        {issueUtil.isClosed(status) ? (
+        {issueUtils.isClosed(status) ? (
           <GoIssueClosed style={{ color: "red" }} />
         ) : (
           <GoIssueOpened style={{ color: "green" }} />
