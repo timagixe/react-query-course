@@ -4,6 +4,7 @@ import { relativeDate } from "../helpers/relativeDate";
 import { issueUtils } from "../helpers/issueUtils";
 import { memo } from "react";
 import useUserQuery from "../hooks/useUserQuery";
+import Label from "./Label";
 
 function IssueItem({
   title,
@@ -31,9 +32,7 @@ function IssueItem({
         <span>
           <Link to={`/issue/${number}`}>{title}</Link>
           {labels.map((label) => (
-            <span key={label} className={`label red`}>
-              {label}
-            </span>
+            <Label key={label} label={label} />
           ))}
         </span>
         <small>
@@ -50,12 +49,12 @@ function IssueItem({
         />
       )}
       <span className="comment-count">
-        {commentCount > 0 ? (
+        {Boolean(commentCount) && (
           <>
             <GoComment />
             {commentCount}
           </>
-        ) : null}
+        )}
       </span>
     </li>
   );

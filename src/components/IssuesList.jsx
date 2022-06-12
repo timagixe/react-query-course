@@ -1,8 +1,9 @@
 import useIssuesQuery from "../hooks/useIssuesQuery";
 import IssueItem from "./IssueItem";
+import { memo } from "react";
 
-export default function IssuesList() {
-  const issuesQuery = useIssuesQuery();
+function IssuesList({ selectedLabels }) {
+  const issuesQuery = useIssuesQuery(selectedLabels);
 
   return (
     <div>
@@ -28,3 +29,5 @@ export default function IssuesList() {
     </div>
   );
 }
+
+export default memo(IssuesList);
