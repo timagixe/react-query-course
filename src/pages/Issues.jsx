@@ -2,12 +2,14 @@ import { useState, useCallback } from "react";
 import { memo } from "react";
 import IssuesList from "../components/IssuesList";
 import LabelList from "../components/LabelList";
+import StatusSelect from "../components/StatusSelect";
 
 function Issues() {
-  const [selectedLabels, setSelectedLabels] = useState([]);
+  const [labels, setLabels] = useState([]);
+  const [status, setStatus] = useState("");
 
   const onToggleLabel = useCallback((labelId) => {
-    setSelectedLabels((old) => {
+    setLabels((old) => {
       if (old.includes(labelId)) {
         return old.filter((id) => id !== labelId);
       }
@@ -15,18 +17,21 @@ function Issues() {
     });
   }, []);
 
+  const onStatusChange = useCallback(
+    ({ target: { value } }) => setStatus(value),
+    []
+  );
+
   return (
     <div>
       <main>
         <section>
           <h1>Issues</h1>
-          <IssuesList selectedLabels={selectedLabels} />
+          <IssuesList selectedLabels={labels} selectedStatus={status} />
         </section>
         <aside>
-          <LabelList
-            selectedLabels={selectedLabels}
-            onToggleLabel={onToggleLabel}
-          />
+          <LabelList selectedLabels={labels} onToggleLabel={onToggleLabel} />
+          <StatusSelect value={status} onChange={onStatusChange} />
         </aside>
       </main>
     </div>

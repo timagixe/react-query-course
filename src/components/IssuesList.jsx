@@ -2,12 +2,15 @@ import useIssuesQuery from "../hooks/useIssuesQuery";
 import IssueItem from "./IssueItem";
 import { memo } from "react";
 
-function IssuesList({ selectedLabels }) {
-  const issuesQuery = useIssuesQuery(selectedLabels);
+function IssuesList({ selectedLabels, selectedStatus }) {
+  const issuesQuery = useIssuesQuery({
+    labels: selectedLabels,
+    status: selectedStatus,
+  });
 
   return (
     <div>
-      <h1>Issues List</h1>
+      <h2>Issues List</h2>
       {issuesQuery.isLoading && <p>Loading...</p>}
       {issuesQuery.isSuccess && (
         <>
