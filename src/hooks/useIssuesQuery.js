@@ -1,21 +1,21 @@
 import { useQuery } from "react-query";
 import handleResponse from "../helpers/handleResponse";
 
-const issuesUrl = (labels) => {
+const issuesUrl = ({ labels, status }) => {
   const hasLabels = Boolean(labels.length);
-  const labelsQueryParams = hasLabels
-    ? labels.map((label) => `labels[]=${label}`).join("&")
+  const statusQueryParam = status ? `&status=${status}` : "";
+  const labelsQueryParam = hasLabels
+    ? labels.map((label) => `labels[]=${label}`)
     : "";
-  return `/api/issues?${labelsQueryParams}`;
+  return `/api/issues?${labelsQueryParam}${statusQueryParam}`;
 };
 
-function queryIssuesFunction({ queryKey: [{ labels }] }) {
-  return fetch(issuesUrl(labels)).then(
+function queryIssuesFunction({ queryKey: [{ labels, status }] }) {
+  return fetch(issuesUrl({ labels, status })).then(
     handleResponse({ onErrorMessage: "Couldn't load issues list." })
   );
 }
 
-export default function useIssuesQuery(labels) {
-  console.log("TEST");
-  return useQuery([{ scope: "issues", labels }], queryIssuesFunction);
+export default function useIssuesQuery({ labels, status }) {
+  return useQuery([{ scope: "issues", labels, status }], queryIssuesFunction);
 }
