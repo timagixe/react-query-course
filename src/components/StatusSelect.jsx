@@ -1,12 +1,5 @@
 import { memo } from "react";
-
-const STATUSES = [
-  { id: "backlog", label: "Backlog" },
-  { id: "todo", label: "To-do" },
-  { id: "inProgress", label: "In Progress" },
-  { id: "done", label: "Done" },
-  { id: "cancelled", label: "Cancelled" },
-];
+import { STATUSES } from "../helpers/defaultData";
 
 function StatusSelect({ value, onChange }) {
   return (
