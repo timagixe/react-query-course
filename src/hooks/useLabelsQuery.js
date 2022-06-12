@@ -12,5 +12,5 @@ function queryLabelsFunction() {
 }
 
 export default function useLabelsQuery() {
-  return useQuery(["labels"], queryLabelsFunction);
+  return useQuery([{ scope: "labels" }], queryLabelsFunction);
 }
