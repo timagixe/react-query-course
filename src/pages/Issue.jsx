@@ -1,5 +1,8 @@
+import { memo } from "react";
 import IssueDetails from "../components/IssueDetails";
 
-export default function Issue() {
+function Issue() {
   return <IssueDetails />;
 }
+
+export default memo(Issue);
