@@ -1,5 +1,6 @@
 import { useQuery } from "react-query";
 import handleResponse from "../helpers/handleResponse";
+import { STALE_TIME } from "../helpers/staleTime";
 
 const labelsUrl = () => "/api/labels";
 
@@ -12,5 +13,7 @@ function queryLabelsFunction() {
 }
 
 export default function useLabelsQuery() {
-  return useQuery([{ scope: "labels" }], queryLabelsFunction);
+  return useQuery([{ scope: "labels" }], queryLabelsFunction, {
+    staleTime: STALE_TIME.ONE_HOUR,
+  });
 }

@@ -1,5 +1,6 @@
 import { useQuery } from "react-query";
 import handleResponse from "../helpers/handleResponse";
+import { STALE_TIME } from "../helpers/staleTime";
 
 const issuesUrl = ({ labels, status }) => {
   const hasLabels = Boolean(labels.length);
@@ -17,5 +18,7 @@ function queryIssuesFunction({ queryKey: [{ labels, status }] }) {
 }
 
 export default function useIssuesQuery({ labels, status }) {
-  return useQuery([{ scope: "issues", labels, status }], queryIssuesFunction);
+  return useQuery([{ scope: "issues", labels, status }], queryIssuesFunction, {
+    staleTime: STALE_TIME.ONE_MINUTE,
+  });
 }
