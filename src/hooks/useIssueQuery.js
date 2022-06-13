@@ -1,14 +1,10 @@
 import { useQuery } from "react-query";
-import handleResponse from "../helpers/handleResponse";
+import fetchWithError from "../helpers/fetchWithError";
 
 const issueUrl = (number) => `/api/issues/${number}`;
 
 function fetchIssueFunction({ queryKey: [{ number }] }) {
-  return fetch(issueUrl(number)).then(
-    handleResponse({
-      onErrorMessage: `Couldn't load issue with issue number of ${number}`,
-    })
-  );
+  return fetchWithError(issueUrl(number));
 }
 
 export default function useIssueQuery(number) {

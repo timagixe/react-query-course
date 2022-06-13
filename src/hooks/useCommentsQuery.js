@@ -1,14 +1,10 @@
 import { useQuery } from "react-query";
-import handleResponse from "../helpers/handleResponse";
+import fetchWithError from "../helpers/fetchWithError";
 
 const commentsUrl = (number) => `/api/issues/${number}/comments`;
 
 function fetchIssuesCommentsFunction({ queryKey: [{ number }] }) {
-  return fetch(commentsUrl(number)).then(
-    handleResponse({
-      onErrorMessage: `Couldn't load comments for issue with issue number of ${number}`,
-    })
-  );
+  return fetchWithError(commentsUrl(number));
 }
 
 export default function useIssueCommentsQuery(number) {

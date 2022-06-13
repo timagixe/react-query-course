@@ -1,15 +1,11 @@
 import { useQuery } from "react-query";
-import handleResponse from "../helpers/handleResponse";
+import fetchWithError from "../helpers/fetchWithError";
 import { STALE_TIME } from "../helpers/staleTime";
 
 const userUrl = (userId) => `/api/users/${userId}`;
 
 function queryUserFunction({ queryKey: [{ userId }] }) {
-  return fetch(userUrl(userId)).then(
-    handleResponse({
-      onErrorMessage: `Couldn't load data for userId = ${userId}`,
-    })
-  );
+  return fetchWithError(userUrl(userId));
 }
 
 export default function useUserQuery(userId) {

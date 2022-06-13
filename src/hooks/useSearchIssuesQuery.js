@@ -1,5 +1,5 @@
 import { useQuery } from "react-query";
-import handleResponse from "../helpers/handleResponse";
+import fetchWithError from "../helpers/fetchWithError";
 
 function searchIssuesUrl(search) {
   const searchQueryParam = Boolean(search) ? `q=${encodeURI(search)}` : "";
@@ -7,9 +7,7 @@ function searchIssuesUrl(search) {
 }
 
 function fetchSearchIssuesFunction({ queryKey: [{ search }] }) {
-  return fetch(searchIssuesUrl(search)).then(
-    handleResponse({ onErrorMessage: `Couldn't loading issues for: ${search}` })
-  );
+  return fetchWithError(searchIssuesUrl(search));
 }
 
 export default function useSearchIssuesQuery(search) {
