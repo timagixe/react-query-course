@@ -43,6 +43,8 @@ function IssuesList({ selectedLabels, selectedStatus }) {
       <h2>{Boolean(searchValue) ? "Search Results" : "Issues List"}</h2>
       {issuesQuery.isLoading ? (
         <p>Loading...</p>
+      ) : issuesQuery.isError ? (
+        <p>{issuesQuery.error.message}</p>
       ) : isIdleLoading(searchIssuesQuery) ? (
         <>
           <ul className="issues-list">
