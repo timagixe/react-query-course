@@ -4,8 +4,8 @@ import { STALE_TIME } from "../helpers/staleTime";
 
 const userUrl = (userId) => `/api/users/${userId}`;
 
-function queryUserFunction({ queryKey: [{ userId }] }) {
-  return fetchWithError(userUrl(userId));
+function queryUserFunction({ queryKey: [{ userId }], signal }) {
+  return fetchWithError(userUrl(userId), { signal });
 }
 
 export default function useUserQuery(userId) {

@@ -6,8 +6,8 @@ function searchIssuesUrl(search) {
   return `/api/search/issues?${searchQueryParam}`;
 }
 
-function fetchSearchIssuesFunction({ queryKey: [{ search }] }) {
-  return fetchWithError(searchIssuesUrl(search));
+function fetchSearchIssuesFunction({ queryKey: [{ search }], signal }) {
+  return fetchWithError(searchIssuesUrl(search), { signal });
 }
 
 export default function useSearchIssuesQuery(search) {

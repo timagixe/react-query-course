@@ -3,8 +3,8 @@ import fetchWithError from "../helpers/fetchWithError";
 
 const commentsUrl = (number) => `/api/issues/${number}/comments`;
 
-function fetchIssuesCommentsFunction({ queryKey: [{ number }] }) {
-  return fetchWithError(commentsUrl(number));
+function fetchIssuesCommentsFunction({ queryKey: [{ number }], signal }) {
+  return fetchWithError(commentsUrl(number), { signal });
 }
 
 export default function useIssueCommentsQuery(number) {

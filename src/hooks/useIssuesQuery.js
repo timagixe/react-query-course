@@ -11,8 +11,8 @@ const issuesUrl = ({ labels, status }) => {
   return `/api/issues?${labelsQueryParam}${statusQueryParam}`;
 };
 
-function queryIssuesFunction({ queryKey: [{ labels, status }] }) {
-  return fetchWithError(issuesUrl({ labels, status }));
+function queryIssuesFunction({ queryKey: [{ labels, status }], signal }) {
+  return fetchWithError(issuesUrl({ labels, status }), { signal });
 }
 
 export default function useIssuesQuery({ labels, status }) {

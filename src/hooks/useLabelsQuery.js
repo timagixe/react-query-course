@@ -4,8 +4,8 @@ import { STALE_TIME } from "../helpers/staleTime";
 
 const labelsUrl = () => "/api/labels";
 
-function queryLabelsFunction() {
-  return fetchWithError(labelsUrl());
+function queryLabelsFunction({ signal }) {
+  return fetchWithError(labelsUrl(), { signal });
 }
 
 export default function useLabelsQuery() {
