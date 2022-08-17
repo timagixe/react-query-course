@@ -3,6 +3,7 @@ import IssueItem from "./IssueItem";
 import { memo, useState, useCallback } from "react";
 import useSearchIssuesQuery from "../hooks/useSearchIssuesQuery";
 import isIdleLoading from "../helpers/isIdleLoading";
+import Loader from "./Loader";
 
 function IssuesList({ selectedLabels, selectedStatus }) {
   const issuesQuery = useIssuesQuery({
@@ -40,7 +41,7 @@ function IssuesList({ selectedLabels, selectedStatus }) {
           onChange={onSearchChange}
         />
       </form>
-      <h2>{Boolean(searchValue) ? "Search Results" : "Issues List"}</h2>
+      <h2>{Boolean(searchValue) ? "Search Results" : ["Issues List", issuesQuery.isFetching && <Loader />]}</h2>
       {issuesQuery.isLoading ? (
         <p>Loading...</p>
       ) : issuesQuery.isError ? (
