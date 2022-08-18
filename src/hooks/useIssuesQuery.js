@@ -6,7 +6,7 @@ const issuesUrl = ({ labels, status }) => {
   const hasLabels = Boolean(labels.length);
   const statusQueryParam = status ? `&status=${status}` : "";
   const labelsQueryParam = hasLabels
-    ? labels.map((label) => `labels[]=${label}`)
+    ? labels.map((label) => `labels[]=${label}`).join("&")
     : "";
   return `/api/issues?${labelsQueryParam}${statusQueryParam}`;
 };
