@@ -3,7 +3,7 @@ import fetchWithError from "../helpers/fetchWithError";
 
 const issueUrl = (number) => `/api/issues/${number}`;
 
-function fetchIssueFunction({ queryKey: [{ number }], signal }) {
+export function fetchIssueFunction({ queryKey: [{ number }], signal }) {
   return fetchWithError(issueUrl(number), { signal });
 }
 
