@@ -14,15 +14,15 @@ const issuesUrl = ({ labels, status }) => {
 function queryIssuesFunction({ queryKey: [{ labels, status }], signal }, queryClient) {
   return fetchWithError(issuesUrl({ labels, status }), { signal }).then(issues => {
     if (Array.isArray(issues)) {
-      issues.forEach(
-        issue => queryClient.setQueryData(
+      for (const issue of issues) {
+        queryClient.setQueryData(
           [{
             scope: "issue",
             number: String(issue.number)
-           }],
+          }],
           issue
-        )
-      )
+        );
+      }
     }
     return issues;
   });
@@ -30,7 +30,9 @@ function queryIssuesFunction({ queryKey: [{ labels, status }], signal }, queryCl
 
 export default function useIssuesQuery({ labels, status }) {
   const queryClient = useQueryClient();
-  return useQuery([{ scope: "issues", labels, status }], (context) => queryIssuesFunction(context, queryClient), {
-    staleTime: STALE_TIME.ONE_MINUTE,
-  });
+  return useQuery(
+    [{ scope: "issues", labels, status }],
+    (context) => queryIssuesFunction(context, queryClient),
+    { staleTime: STALE_TIME.ONE_MINUTE }
+  );
 }

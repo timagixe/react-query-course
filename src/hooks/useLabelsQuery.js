@@ -12,6 +12,6 @@ function queryLabelsFunction({ signal }) {
 export default function useLabelsQuery() {
   return useQuery([{ scope: "labels" }], queryLabelsFunction, {
     staleTime: STALE_TIME.ONE_HOUR,
-    placeholderData: defaultLabels
+    placeholderData: defaultLabels,
   });
 }
