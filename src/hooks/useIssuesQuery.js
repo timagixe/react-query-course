@@ -1,4 +1,4 @@
-import { useQuery } from "react-query";
+import { useQuery, useQueryClient } from "react-query";
 import fetchWithError from "../helpers/fetchWithError";
 import { STALE_TIME } from "../helpers/staleTime";
 
@@ -11,12 +11,26 @@ const issuesUrl = ({ labels, status }) => {
   return `/api/issues?${labelsQueryParam}${statusQueryParam}`;
 };
 
-function queryIssuesFunction({ queryKey: [{ labels, status }], signal }) {
-  return fetchWithError(issuesUrl({ labels, status }), { signal });
+function queryIssuesFunction({ queryKey: [{ labels, status }], signal }, queryClient) {
+  return fetchWithError(issuesUrl({ labels, status }), { signal }).then(issues => {
+    if (Array.isArray(issues)) {
+      issues.forEach(
+        issue => queryClient.setQueryData(
+          [{
+            scope: "issue",
+            number: String(issue.number)
+           }],
+          issue
+        )
+      )
+    }
+    return issues;
+  });
 }
 
 export default function useIssuesQuery({ labels, status }) {
-  return useQuery([{ scope: "issues", labels, status }], queryIssuesFunction, {
+  const queryClient = useQueryClient();
+  return useQuery([{ scope: "issues", labels, status }], (context) => queryIssuesFunction(context, queryClient), {
     staleTime: STALE_TIME.ONE_MINUTE,
   });
 }
