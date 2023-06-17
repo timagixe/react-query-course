@@ -6,6 +6,7 @@ import Comment from "./Comment";
 import { memo } from "react";
 import IssueStatus from "./IssueStatus";
 import IssueAssignment from "./IssueAssignment";
+import IssueLabels from "./IssueLabels";
 
 function IssueDetails() {
     const { number } = useParams();
@@ -49,6 +50,10 @@ function IssueDetails() {
                             />
                             <IssueAssignment
                                 assignee={issueQuery.data.assignee}
+                                issueNumber={issueQuery.data.number.toString()}
+                            />
+                            <IssueLabels
+                                labels={issueQuery.data.labels}
                                 issueNumber={issueQuery.data.number.toString()}
                             />
                         </aside>
