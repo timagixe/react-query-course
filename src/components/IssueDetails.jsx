@@ -7,11 +7,22 @@ import { memo } from "react";
 import IssueStatus from "./IssueStatus";
 import IssueAssignment from "./IssueAssignment";
 import IssueLabels from "./IssueLabels";
+import useScrollToBottomAction from "../hooks/useScrollToBottomAction";
+import Loader from "./Loader";
 
 function IssueDetails() {
     const { number } = useParams();
     const issueQuery = useIssueQuery(number);
     const commentsQuery = useIssueCommentsQuery(number);
+
+    useScrollToBottomAction(
+        document,
+        () => {
+            if (commentsQuery.isFetching) return;
+            commentsQuery.fetchNextPage();
+        },
+        100
+    );
 
     return (
         <div className="issue-details">
@@ -33,15 +44,18 @@ function IssueDetails() {
                             {commentsQuery.isLoading ? (
                                 <p>Loading...</p>
                             ) : (
-                                commentsQuery.data?.map((comment) => (
-                                    <Comment
-                                        key={comment.id}
-                                        comment={comment.comment}
-                                        createdBy={comment.createdBy}
-                                        createdDate={comment.createdDate}
-                                    />
-                                ))
+                                commentsQuery.data?.pages.map((commentsPage) =>
+                                    commentsPage.map((comment) => (
+                                        <Comment
+                                            key={comment.id}
+                                            comment={comment.comment}
+                                            createdBy={comment.createdBy}
+                                            createdDate={comment.createdDate}
+                                        />
+                                    ))
+                                )
                             )}
+                            <Loader />
                         </section>
                         <aside>
                             <IssueStatus
