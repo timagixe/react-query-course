@@ -30,7 +30,7 @@ function IssueItem({
       fetchIssueFunction
     );
 
-    queryClient.prefetchQuery(
+    queryClient.prefetchInfiniteQuery(
       [{ scope: "issueComments", number: String(number) }],
       fetchIssuesCommentsFunction
     );
